@@ -1,6 +1,8 @@
 # RP2040 DBUG Probe
 
-## 25/12/25
+> Some images in the journal are unavailable due to a CDN issue. 
+
+## 25 December, 2025 - Designing The PCB
 
 I broke my old UART to USB adapter and recently saw an article about the [Raspberry Pi Debug Probe](https://www.raspberrypi.com/documentation/microcontrollers/debug-probe.html) and though why not make one myself 🤔
 
@@ -49,7 +51,7 @@ This is how the board looked after I finished routing everything up
 
 ![image](https://hc-cdn.hel1.your-objectstorage.com/s/v3/64ca18c767f5c8ee_P8sMY1Ag_grEAAAAAElFTkSuQmCC)
 
-![image](https://hc-cdn.hel1.your-objectstorage.com/s/v3/5643ff5a2ca17ac1_P8sMY1Ag_grEAAAAAElFTkSuQmCC)
+![image|60](https://hc-cdn.hel1.your-objectstorage.com/s/v3/5643ff5a2ca17ac1_P8sMY1Ag_grEAAAAAElFTkSuQmCC)
 
 
 Now all that was left to do was add some testpoints and silkscreen. I added test points for the voltage rails and the swd interface of the rp2040 itself as I couldn't route it out to some headers. For silkscreen I just added some labels for the pin headers and test points and yeah that was it, didn't really add anything as this was a pretty small board, though I might add the oshw logo on this later.
@@ -69,5 +71,113 @@ Finished everything up by assigning lcsc numbers to components and generating a 
 ![image](https://hc-cdn.hel1.your-objectstorage.com/s/v3/272ab69b42a04976_sHdvgWAAAAAElFTkSuQmCC)
 
 
-## Time Spent: 6.5 Hours
+### Time Spent: 6.5 Hours
+---
+## 20 March, 2026  - Assembled The Board
+
+I finally had some free time today and I didn't procrastinate and decided to finally assemble the board.
+
+Started off by generating an interactive HTML BOM using the KiCad plugin and then used that to basically get all the components required for this out.
+
+![](attachments/20260320_185838.jpg)
+
+Then I went ahead and applied solder paste on the board using a stencil. It only took me about 3 tries to get the perfect amount of solder evenly on the board.
+
+![](attachments/20260320_190820.jpg)
+
+Then it was just the tedious task of picking and placing the small 0402 passives and componenets.
+
+![](attachments/20260320_192455.jpg)
+
+After everything was placed, the board was sent to the reflow plate, where it got cooked. After getting cooked, I visually inspected all the pads to check if there were any bridges, luckily there weren't any. Though there was a tiny blob of solder on one of the RP2040 pads (It didn't short anything), so I just put some flux, and got out the pinecil with knife tip and remove the extra solder.
+
+![](attachments/20260320_201026.jpg)
+
+I was going to plug in the board to a usb connector, but I saw that the USB-C port was a bit shaky and it would have probably gotten ripped off if I tried to plug in anything. So I just soldered up it's mounting holes and plugged it in. 
+
+It showed up as a RPI-RP2 which was a good sign, I flashed circuitpython on it and wrote minimal code to get one of the LED to light up and it worked :D
+
+![](attachments/tuff%201.png)
+
+I quickly wrote an LED chaser effect script to test out all the LEDs, and it worked successfully.
+
+![](attachments/20260320_204500-ezgif.com-video-to-gif-converter.gif)
+
+### Time Spent: 2 Hours
+---
+## 21 March, 2026 - Developing Firmware
+
+For firmware I decided to go with using the raspberry pi [Debugprobe](https://github.com/raspberrypi/debugprobe) firmware. They made it open source and it was really easy to modify it for my board.
+
+I initially tried building it on windows but that was pretty frustrating as I had no tools installed, and it just feels weird. So I installed debian on WSL and cloned the Debugprobe repo on that, installed the pico-sdk and then modified the `board_debug_probe_config.h` file under the `include` folder with the pin definitions for my board and then built it. 
+
+I got my `.uf2` and I flashed the RP2040 with it and everything worked perfectly :D
+
+I loaded up teraterm to open the COM port and type something to check if it works properly, and sure enough I see a red LED blink when I send something. Although the LED was on the wrong side (that's what I though), because the silkscreen on the bottom said this was the SWD interface and not UART. So I rebuilt the firmware, and then hopped on KiCad to fix the labels, and that's when I realized that my labels were actually correct, but I had just messed up on the silkscreen. So I reverted back to the original build lmao.
+
+
+After finishing firmware I went ahead and started polishing the repository, started off by making a cool pinout thingamajig in figma.
+![](attachments/Pasted%20image%2020260321165518.png)
+
+While here I also decided to make a case for it cause why not. The problem I faced was that this PCB had no mounting holes so I can't make a screw on design.
+
+I first started off with a slide in design where the PCB can slide into a tight gap to remain secured but scrapped that as It was a pretty weird thing to implement in fusion and in the end it didn't even look cool.
+
+*scrapped slide in case idea*
+![](attachments/Fusion360_cc0wHfLf7O.png)
+
+So I went ahead and decide to create a tiny snap fit/press fit type of case.
+
+Started off by just creating like an enclosure and splitting it into two parts.
+
+![](attachments/Fusion360_rg7d7DDLzi.png)
+
+
+I then extruded a part of the top case down into the bottom part and then cut it out from the bottom part.
+
+![](attachments/Fusion360_q5zkJ2MwIo.png)
+
+I added 0.2mm offsets to everything to account for printer tolerance and then printed a draft version which fit together pretty good.
+
+![](attachments/20260322_011303.jpg)
+
+Knowing that the press fit design works, I added more features like these two extrusions you see in the middle to pinch the PCB and ensure it doesn't rotate inside the case.
+
+![](attachments/Fusion360_P7Vr2sm9lN.png)
+
+On the top part I added these hollow parts in the wall right above where the LEDs are so they could be seen through the plastic.
+
+![](attachments/Fusion360_hDhlbf3k6j.png)
+
+
+And after that I did a bunch of tries to get a raspberry pi logo on the top case.
+
+![](attachments/Fusion360_On8iKUYSv2.png)
+
+This one had the logo too small so it couldn't print properly, I tried resizing and exporting a few different times to look in the slicer and nothing really worked (well). So I decided to actually negative of the shape and extrude that into black so its easier to print.
+
+![](attachments/Fusion360_JS4XFsAwV2.png)
+
+I spent like a solid 20 minute in Bambu Studio trying to figure out how to print this without an AMS and I was stuck trying to figure out how to get the black part to print first and not the white. I kept searching in parts setting but it eventually turns out you can set the sequence by clicking on the gear icon that shows up next to the build plate.
+
+![](attachments/bambu-studio_509MQxtdnK.png)
+
+this is what my top printed case looked like irl.
+
+![](attachments/20260322_012440.jpg)
+
+pretty sick!
+
+I put the debug probe PCB inside the case and plugged it in but nothing happened. I was kinda scared but it took me a while to realize the USB-C connector was a bit loose and that was causing the problem.
+
+So I threw the board back onto the reflow board to fix the connections, but as I was taking it off It slipped and fell on the ground. This was actually painful and my heart dropped, fortunately due to surface tension most of the components stayed on the board. Only the USB-C connector, Crystal and the LDO fell off which I reflowed back on. For good measure I soldered my USB-C connectors' mounting holes with better leaded solder compared to the bismuth solder. While here I also noticed that my RP2040 had a bridged pin so I fixed that with a knife tip pinecil and some flux.
+
+I plug it back in an voila it works :D
+
+![](attachments/20260322_014637.jpg)
+
+
+### Time Spent: 3 Hours
+
+---
 
