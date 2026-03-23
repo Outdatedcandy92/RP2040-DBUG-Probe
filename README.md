@@ -16,16 +16,16 @@ Inspired by the [Raspberry Pi Debug Probe](https://www.raspberrypi.com/documenta
 
 ## Table of Contents
 
-- [Overview](#RP2040%20DBUG%20Probe)
-- [Quick Start](##Quick%20Start)
-- [Hardware](##Hardware)
-	- [Pinout](###Pinout)
-	- [Schematic](###Schematic)
-	- [PCB](###PCB)
-	- [Case](###Case)
-	- [BOM/Reproduction](###BOM/Reproduction)
-- [Firmware](##Firmware)
-- [License](##License)
+- [Overview](#rp2040-dbug-probe)
+- [Quick Start](#quick-start)
+- [Hardware](#hardware)
+	- [Pinout](#pinout)
+	- [Schematic](#schematic)
+	- [PCB](#pcb)
+	- [Case](#case)
+	- [BOM/Reproduction](#bomreproduction)
+- [Firmware](#firmware)
+- [License](#license)
 
 ## Quick Start
 
