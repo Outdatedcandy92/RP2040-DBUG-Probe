@@ -12,6 +12,7 @@ Inspired by the [Raspberry Pi Debug Probe](https://www.raspberrypi.com/documenta
 - 32mm X 22mm Board Footprint
 - USB to UART/SWD Interfaces With Level Shifters
 - Uses regular 2.54mm Pitch Headers
+- Status LEDs for serial interfaces and power
 
 ## Table of Contents
 
@@ -44,7 +45,7 @@ To use it as a USB-to-UART adapter, open the corresponding COM port in your pref
 
 ### Schematic
 
-Schematics pdf is available under the `/hardware/PCB` folder and the project's KiCad files can be found under `/hardware/PCB/kicad`.
+Schematic pdf is available under the `/hardware/PCB` folder and the project's KiCad files can be found under `/hardware/PCB/kicad`.
 
 ![](attachments/kicad_EaC3SPLCxU.png)
 

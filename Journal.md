@@ -180,4 +180,14 @@ I plug it back in an voila it works :D
 ### Time Spent: 3 Hours
 
 ---
+## 22 March, 2026 - Polishing Repo
 
+I basically just polished up the repository today, added all the new CAD files, improved the README and added firmware and case sections.
+
+I also did a little case animation in Fusion360 which looks pretty cool.
+
+![](attachments/debugcase-ezgif.com-video-to-gif-converter.gif)
+
+Also did some writeups for reddit posts which I'm going to make tomorrow.
+
+### Time Spent: 1 Hour
