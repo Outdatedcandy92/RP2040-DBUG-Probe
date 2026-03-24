@@ -65,7 +65,7 @@ Use the `top.stl` and `logo.stl` if you want to have the logo printed on top, if
 
 The rough BOM can be found in [BOM.md](./BOM.md) and it assumes you'll assemble the board yourself. The rough cost for just the PCB and parts (excluding shipping) is around $24.
 
-To build one yourself, use the files in `/production` to order the PCB and components, or opt for PCBA.
+To build one yourself, use the files in `/hardware/production` to order the PCB and components, or opt for PCBA.
 
 ## Firmware
 
